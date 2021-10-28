@@ -1877,6 +1877,8 @@ wUnusedD153:: db
 
 	ds 2
 
+wUnusedD155:: ; k: used as a backup for how many pokemon to split exp between (fixing exp all) ; Original code from jojobear13's shinpokered	
+
 wEvoStoneItemID:: db
 
 wSavedNPCMovementDirections2Index:: db

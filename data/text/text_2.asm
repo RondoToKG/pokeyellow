@@ -1260,8 +1260,11 @@ _GainedText::
 	text_end
 
 _WithExpAllText::
-	text "with EXP.ALL,"
-	cont "@"
+	; k: Shortens EXP.ALL text
+	;text "with EXP.ALL,"
+	;cont "@"
+	text "The team gained"
+	line "@@"
 	text_end
 
 _BoostedText::
