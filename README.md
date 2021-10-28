@@ -11,3 +11,5 @@ As of currently, the following features have been implemented:
 - Additionally, all moves have had their base stats updated to be accurate to their values in LGPE. This includes LGPE exclusive buffs such as 200 base power Solarbeam & Sky Attack as well as 40 base power Absorb & 75 base power Mega Drain.
 
 - Addition of the Steel, Dark, & Fairy Type and modernized type chart.
+
+- Wild encounter tables expanded from 10 to 12 and have been changed to contain encounters from LGPE. Version exclusive encounter rates split in half to fit both on one encounter table.
