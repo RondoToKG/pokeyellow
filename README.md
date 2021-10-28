@@ -15,3 +15,7 @@ As of currently, the following features have been implemented:
 - Wild encounter tables expanded from 10 to 12 and are almost entirely similar to LGPE. Version exclusive encounter rates split in half to fit both encounters on one table. All 151 pokemon are catchable.
 
 - Updated Pokemon to their latest official base stats and typings.
+
+- Gen 1's EXP.ALL now works like Gen 7's Exp Share. Pokemon in battle gain 100% of experience, non-fainted pokemon in party gain 50% each. EXP. ALL text has been greatly reduced. (code from Jojobear13's ShinPokeRed)
+
+- TM quantity no longer lowers, making TM's have infinite uses.
