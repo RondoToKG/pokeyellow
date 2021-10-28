@@ -1,3 +1,5 @@
+# Pokemon Let's Go Yellow
+
 The following is an in-progress rom hack of Pokemon Yellow based on the Pret disassembly project. The goal of this project is to implement many of the modern features contained within the official remake, Pokemon Let's Go Pikachu & Eevee (LGPE).
 
 As of currently, the following features have been implemented:
