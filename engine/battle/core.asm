@@ -835,11 +835,11 @@ FaintEnemyPokemon:
 ; the base exp (which determines normal exp) is also halved
 	ld hl, wEnemyMonBaseStats
 	ld b, $7
-.halveExpDataLoop
-	srl [hl]
-	inc hl
-	dec b
-	jr nz, .halveExpDataLoop
+;.halveExpDataLoop
+	;srl [hl]
+	;inc hl
+	;dec b
+	;jr nz, .halveExpDataLoop
 
 ; give exp (divided evenly) to the mons that actually fought in battle against the enemy mon that has fainted
 ; if exp all is in the bag, this will be only be half of the stat exp and normal exp, due to the above loop
@@ -849,22 +849,119 @@ FaintEnemyPokemon:
 	callfar GainExperience
 	pop af
 	ret z ; return if no exp all
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Jojobear13's exp all code
+	ld a, [wUnusedD155]
+	dec a
+	jr z, .expallfix_end
+	push hl
+	push bc
+	call UndoDivision4ExpAll
+	pop bc
+	pop hl
+.expallfix_end
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Jojobear13's exp all code
 
 ; the player has exp all
 ; now, set the gain exp flag for every party member
 ; half of the total stat exp and normal exp will divided evenly amongst every party member
+	;ld a, $1
+	;ld [wBoostExpByExpAll], a
+	;ld a, [wPartyCount]
+	;ld b, 0
+	call SetExpAllFlags
+;.gainExpFlagsLoop
+	;scf
+	;rl b
+	;dec a
+	;jr nz, .gainExpFlagsLoop
+	;ld a, b
+	;ld [wPartyGainExpFlags], a
+	jpfar GainExperience
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+UndoDivision4ExpAll:
+	ld hl, wEnemyMonBaseStats	;get first stat
+	ld b, $7
+.exp_stat_loop
+
+	ld a, [wUnusedD155]
+	ld c, a		;get number of participating pkmn into c
+	xor a	;clear a to zero
+	
+.exp_adder_loop
+	add [hl]	; add the value of the current exp stat to 'a'
+	dec c		; decrement participating pkmn
+	jr nz, .exp_adder_loop
+	
+	ld [hl], a	;stick the exp values, now multiplied by the number of participating pkmn, back into the stat address
+	
+	inc hl	;get next stat 
+	dec b
+	
+	jr nz, .exp_stat_loop
+	ret
+
+;joenote - fixes issues where exp all counts fainted pkmn for dividing exp
+SetExpAllFlags:
 	ld a, $1
 	ld [wBoostExpByExpAll], a
 	ld a, [wPartyCount]
+	ld c, a
 	ld b, 0
-.gainExpFlagsLoop
-	scf
-	rl b
-	dec a
-	jr nz, .gainExpFlagsLoop
+	ld hl, wPartyMon1HP
+.gainExpFlagsLoop	
+;wisp92 found that bits need to be rotated in from the left and shifted to the right. 
+;Bit 0 of the flags represents the first mon in the party
+;Bit 5 of the flags represents the sixth mon in the party
+	ld a, [hli]
+	or [hl] ; is mon's HP 0?
+	jp z, .setnextexpflag	;the carry bit is cleared from the last OR, so 0 will be rotated in next
+	scf	;the carry bit is is set, so 1 will be rotated in next
+.setnextexpflag 
+	jp .do_rotations	
+.nextmonforexpall
+	dec c
+	jr z, .return
+	ld a, [wPartyCount]
+	sub c
+	push bc
+	ld bc, wPartyMon2HP - wPartyMon1HP
+	ld hl, wPartyMon1HP
+	call AddNTimes
+	pop bc
+	jr .gainExpFlagsLoop
+.return
 	ld a, b
 	ld [wPartyGainExpFlags], a
-	jpfar GainExperience
+	ret
+.do_rotations
+;need to rotate the carry value into the proper flag bit position
+;a and hl are free to use
+;c is the counter that tells the party position
+;b holds the current flag values
+	push af	;save carry value
+	;the number of rotations needed to move the carry value to the proper flag place is 8 - [wPartyCount] + c
+	ld a, $08
+	ld hl, wPartyCount 
+	sub [hl] ;subtract 1 to 6
+	add c	; add the current count
+	ld h, a
+	pop af	;get the carry value back
+	ld a, h
+	;a now has the rotation count (8 to 3)
+	push bc
+	ld c, a	;make c hold the rotation count
+	ld a, $00
+.loop
+	rr a	;rotate the carry value 1 bit to the right per loop
+	dec c
+	jr nz, .loop
+	pop bc
+	or b	;append current flag values to a
+	ld b, a	; and save them back to b
+	jp .nextmonforexpall
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 EnemyMonFaintedText:
 	text_far _EnemyMonFaintedText
@@ -5627,6 +5724,12 @@ MoveHitTest:
 .doAccuracyCheck
 ; if the random number generated is greater than or equal to the scaled accuracy, the move misses
 ; note that this means that even the highest accuracy is still just a 255/256 chance, not 100%
+
+	; The following snippet is taken from Pokemon Crystal, it fixes the above bug.
+	ld a,b
+	cp $FF ; Is the value $FF?
+	jr z, .Hit ; If so, we need not calculate, just so we can fix this bug.
+	
 	call BattleRandom
 	cp b
 	jr nc, .moveMissed

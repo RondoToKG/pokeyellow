@@ -2509,9 +2509,10 @@ ItemUseTMHM:
 	ld [wWhichPokemon], a
 
 	ld a, [wcf91]
-	call IsItemHM
-	ret c
-	jp RemoveUsedItem
+	ret ; k: TM's will no longer run out
+	;call IsItemHM
+	;ret c
+	;jp RemoveUsedItem
 
 BootedUpTMText:
 	text_far _BootedUpTMText

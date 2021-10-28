@@ -133,10 +133,10 @@ SaveSAV:
 	farcall PrintSaveScreenText
 	ld c, 10
 	call DelayFrames
-	ld hl, WouldYouLikeToSaveText
-	call SaveSAVConfirm
-	and a   ;|0 = Yes|1 = No|
-	ret nz
+	;ld hl, WouldYouLikeToSaveText
+	;call SaveSAVConfirm
+	;and a   ;|0 = Yes|1 = No|
+	;ret nz
 	ld c, 10
 	call DelayFrames
 	ld a, [wSaveFileStatus]
@@ -150,10 +150,10 @@ SaveSAV:
 	ret nz
 .save
 	call SaveSAVtoSRAM
-	ld hl, SavingText
-	call PrintText
-	ld c, 128
-	call DelayFrames
+	;ld hl, SavingText
+	;call PrintText
+	;ld c, 128
+	;call DelayFrames
 	ld hl, GameSavedText
 	call PrintText
 	ld c, 10
@@ -161,7 +161,8 @@ SaveSAV:
 	ld a, SFX_SAVE
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
-	ld c, 30
+	;ld c, 30
+	ld c, 10 ; k: lowered delay time
 	call DelayFrames
 	ret
 
@@ -175,9 +176,9 @@ SaveSAVConfirm:
 	ld a, [wCurrentMenuItem]
 	ret
 
-WouldYouLikeToSaveText:
-	text_far _WouldYouLikeToSaveText
-	text_end
+;WouldYouLikeToSaveText:
+	;text_far _WouldYouLikeToSaveText
+	;text_end
 
 SavingText:
 	text_far _SavingText

@@ -2,6 +2,15 @@ GainExperience:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z ; return if link battle
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Jojobear13's exp all code starts here
+	ld a, [wBoostExpByExpAll]
+	and a
+	jr z, .skipexpallmsg
+	ld a, [wd728]
+	set 7, a
+	ld [wd728], a
+.skipexpallmsg
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Jojobear13's exp all code starts here
 	call DivideExpDataByNumMonsGainingExp
 	ld hl, wPartyMon1
 	xor a
@@ -147,7 +156,19 @@ GainExperience:
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
 	ld hl, GainedText
+	;;;;;
+	ld a, [wBoostExpByExpAll]
+	and a
+	jr z, .noexpall
+	ld a, [wd728]
+	bit 7, a
+	jr z, .noexpprint
+	res 7, a
+	ld [wd728], a
+	ld hl, WithExpAllText
+.noexpall
 	call PrintText
+.noexpprint
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
 	call LoadMonData
@@ -311,7 +332,9 @@ DivideExpDataByNumMonsGainingExp:
 	dec c
 	jr nz, .countSetBitsLoop
 	cp $2
+	ld [wUnusedD155], a ; k: loads amount of pokemon gaining xp into memory, fixing exp all glitch
 	ret c ; return if only one mon is gaining exp
+	ld a, 2 ; k: added
 	ld [wd11e], a ; store number of mons gaining exp
 	ld hl, wEnemyMonBaseStats
 	ld c, wEnemyMonBaseExp + 1 - wEnemyMonBaseStats
@@ -352,10 +375,11 @@ CallBattleCore:
 GainedText:
 	text_far _GainedText
 	text_asm
-	ld a, [wBoostExpByExpAll]
-	ld hl, WithExpAllText
-	and a
-	ret nz
+	;ld a, [wBoostExpByExpAll]
+	;ld hl, WithExpAllText
+	;and a
+	;ret nz
+	; k: removes unnecessary text
 	ld hl, ExpPointsText
 	ld a, [wGainBoostedExp]
 	and a
