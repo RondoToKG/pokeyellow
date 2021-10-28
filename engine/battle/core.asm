@@ -2344,7 +2344,7 @@ UseBagItem:
 	ld a, [wcf91]
 	ld [wd11e], a
 	call GetItemName
-	call CopyToStringBuffer
+	call CopyToStringBuffer ; copy name
 	xor a
 	ld [wPseudoItemID], a
 	call UseItem
@@ -3043,14 +3043,19 @@ PrintMenuItem:
 	and $3f
 	ld [wcd6d], a
 ; print TYPE/<type> and <curPP>/<maxPP>
-	hlcoord 1, 9
-	ld de, TypeText
-	call PlaceString
-	hlcoord 7, 11
-	ld [hl], "/"
-	hlcoord 5, 9
-	ld [hl], "/"
-	hlcoord 5, 11
+	;call GetCurrentMove ; k: moved here to allow access to move data earlier in function
+	;farcall GetMoveCategoryName ; k: calls custom function for finding a move's category for printing
+	;hlcoord 1, 9
+	;ld de, TypeText | k: commented out as TypeText is being replaced by the category name
+	;ld de, wStringBuffer ; k: functionally the same as wStringBuffer1
+	;call PlaceString
+	;hlcoord 7, 11
+	;ld [hl], "/"
+	;hlcoord 5, 9
+	;ld h, b
+	;ld l, c
+	;ld [hl], "/"
+    hlcoord 5, 11
 	ld de, wcd6d
 	lb bc, 1, 2
 	call PrintNumber
@@ -3058,9 +3063,20 @@ PrintMenuItem:
 	ld de, wMaxPP
 	lb bc, 1, 2
 	call PrintNumber
-	call GetCurrentMove
+	call GetCurrentMove ;| k: moved to top of function
 	hlcoord 2, 10
 	predef PrintMoveType
+	farcall GetMoveCategoryName ; k: calls custom function for finding a move's category for printing
+	hlcoord 1, 9
+	;ld de, TypeText | k: commented out as TypeText is being replaced by the category name
+	ld de, wStringBuffer ; k: functionally the same as wStringBuffer1
+	call PlaceString
+	hlcoord 7, 11
+	ld [hl], "/"
+	;hlcoord 5, 9
+	ld h, b
+	ld l, c
+	ld [hl], "/"
 .moveDisabled
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
@@ -3069,8 +3085,9 @@ PrintMenuItem:
 DisabledText:
 	db "Disabled!@"
 
-TypeText:
-	db "TYPE@"
+; k: commented out as its being replaced by category name
+;TypeText:
+	;db "TYPE@"
 
 SelectEnemyMove:
 	ld a, [wLinkState]
@@ -3506,7 +3523,7 @@ CheckPlayerStatusConditions:
 
 .HeldInPlaceCheck
 	ld a, [wEnemyBattleStatus1]
-	bit USING_TRAPPING_MOVE, a ; is enemy using a multi-turn move like wrap?
+	bit USING_TRAPPING_MOVE, a ; is enemy using a mult-turn move like wrap?
 	jp z, .FlinchedCheck
 	ld hl, CantMoveText
 	call PrintText
@@ -4311,6 +4328,7 @@ GetDamageVarsForPlayerAttack:
 	ld d, a ; d = move power
 	ret z ; return if move power is zero
 	ld a, [hl] ; a = [wPlayerMoveType]
+	;and TYPE_MASK ; k: added to mask out category for physical/special split
 	cp SPECIAL ; types >= SPECIAL are all special
 	jr nc, .specialAttack
 .physicalAttack
@@ -4424,6 +4442,7 @@ GetDamageVarsForEnemyAttack:
 	and a
 	ret z ; return if move power is zero
 	ld a, [hl] ; a = [wEnemyMoveType]
+	;and TYPE_MASK ; k: another mask for physical/special split
 	cp SPECIAL ; types >= SPECIAL are all special
 	jr nc, .specialAttack
 .physicalAttack
@@ -5355,6 +5374,7 @@ AdjustDamageForMoveType:
 	ld d, a    ; d = type 1 of defender
 	ld e, [hl] ; e = type 2 of defender
 	ld a, [wPlayerMoveType]
+	and TYPE_MASK ; k: another mask for physical/special split
 	ld [wMoveType], a
 	ldh a, [hWhoseTurn]
 	and a
@@ -5369,6 +5389,7 @@ AdjustDamageForMoveType:
 	ld d, a    ; d = type 1 of defender
 	ld e, [hl] ; e = type 2 of defender
 	ld a, [wEnemyMoveType]
+	and TYPE_MASK ; k: another mask for physical/special split
 	ld [wMoveType], a
 .next
 	ld a, [wMoveType]
@@ -5465,6 +5486,7 @@ AdjustDamageForMoveType:
 ; as far is can tell, this is only used once in some AI code to help decide which move to use
 AIGetTypeEffectiveness:
 	ld a, [wEnemyMoveType]
+	and TYPE_MASK ; k: another mask for the physical/special split
 	ld d, a                    ; d = type of enemy move
 	ld hl, wBattleMonType
 	ld b, [hl]                 ; b = type 1 of player's pokemon

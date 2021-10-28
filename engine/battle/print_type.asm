@@ -35,6 +35,7 @@ PrintMoveType:
 	call GetPredefRegisters
 	push hl
 	ld a, [wPlayerMoveType]
+	and TYPE_MASK ; k: added to mask category bits for physical/special split
 ; fall through
 
 PrintType_:

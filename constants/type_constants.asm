@@ -1,7 +1,7 @@
 ; TypeNames indexes (see data/types/names.asm)
 	const_def
 
-PHYSICAL EQU const_value
+;PHYSICAL EQU const_value | k: removed for physical/special split
 	const NORMAL       ; $00
 	const FIGHTING     ; $01
 	const FLYING       ; $02
@@ -14,7 +14,7 @@ PHYSICAL EQU const_value
 
 	const_next 20
 
-SPECIAL EQU const_value
+;SPECIAL EQU const_value | k: removed for physical/special split
 	const FIRE         ; $14
 	const WATER        ; $15
 	const GRASS        ; $16
@@ -24,3 +24,9 @@ SPECIAL EQU const_value
 	const DRAGON       ; $1A
 
 NUM_TYPES EQU const_value
+
+; k: added for physical/special split
+TYPE_MASK EQU %00111111
+PHYSICAL  EQU %01000000
+SPECIAL   EQU %10000000
+STATUS    EQU %11000000
