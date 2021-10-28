@@ -8,8 +8,10 @@ SafariZoneWestWildMons:
 	db 19, CUBONE
 	db 26, EXEGGCUTE
 	db 24, MAROWAK
+	db 25, SCYTHER
 	db 25, PINSIR
 	db 27, TANGELA
+	db 28, CHANSEY
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

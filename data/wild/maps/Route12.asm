@@ -1,26 +1,30 @@
 Route12WildMons:
 	def_grass_wildmons 15 ; encounter rate
-	db 25, ODDISH
-	db 25, BELLSPROUT
-	db 28, PIDGEY
-	db 28, PIDGEOTTO
-	db 27, ODDISH
-	db 27, BELLSPROUT
-	db 29, GLOOM
-	db 29, WEEPINBELL
-	db 26, FARFETCHD
-	db 31, FARFETCHD
+	db  32, PIDGEY
+	db  34, PIDGEOTTO
+	db  32, ODDISH
+	db  32, BELLSPROUT
+	db  34, FARFETCHD
+	db  32, KRABBY
+	db  34, GLOOM
+	db  34, WEEPINBELL
+	db  34, KRABBY
+	db  34, KINGLER
+	db  36, KRABBY
+	db  36, KINGLER
 	end_grass_wildmons
 
 	def_water_wildmons 3 ; encounter rate
-	db 15, SLOWPOKE
-	db 15, SLOWPOKE
-	db 15, SLOWPOKE
-	db 15, SLOWPOKE
-	db 15, SLOWPOKE
-	db 15, SLOWPOKE
-	db 15, SLOWPOKE
-	db 15, SLOWPOKE
-	db 15, SLOWBRO
-	db 20, SLOWBRO
+	db  32, TENTACOOL
+	db  32, HORSEA
+	db  34, TENTACOOL
+	db  34, HORSEA
+	db  32, MAGIKARP
+	db  32, MAGIKARP
+	db  34, MAGIKARP
+	db  34, MAGIKARP
+	db  34, TENTACRUEL
+	db  34, SEADRA
+	db  36, TENTACRUEL
+	db  36, SEADRA
 	end_water_wildmons

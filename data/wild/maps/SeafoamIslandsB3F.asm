@@ -1,26 +1,30 @@
 SeafoamIslandsB3FWildMons:
 	def_grass_wildmons 10 ; encounter rate
-	db 27, GOLBAT
-	db 36, ZUBAT
-	db 29, KRABBY
-	db 27, ZUBAT
-	db 30, KINGLER
-	db 26, SEEL
-	db 31, KRABBY
-	db 30, SEEL
-	db 28, DEWGONG
-	db 32, DEWGONG
+	db  40, ZUBAT
+	db  42, GOLBAT
+	db  40, SLOWPOKE
+	db  40, SEEL
+	db  42, SLOWBRO
+	db  42, JYNX
+	db  42, SLOWPOKE
+	db  42, SEEL
+	db  42, DEWGONG
+	db  44, JYNX
+	db  44, DEWGONG
+	db  44, DEWGONG
 	end_grass_wildmons
 
 	def_water_wildmons 5 ; encounter rate
-	db 25, TENTACOOL
-	db 30, TENTACOOL
-	db 20, TENTACOOL
-	db 30, STARYU
-	db 35, TENTACOOL
-	db 30, STARYU
-	db 40, TENTACOOL
-	db 30, STARYU
-	db 30, STARYU
-	db 30, STARYU
+	db  40, TENTACOOL
+	db  40, SHELLDER
+	db  42, TENTACOOL
+	db  42, SHELLDER
+	db  40, MAGIKARP
+	db  40, MAGIKARP
+	db  42, MAGIKARP
+	db  42, MAGIKARP
+	db  42, TENTACRUEL
+	db  42, TENTACRUEL
+	db  44, TENTACRUEL
+	db  44, CLOYSTER
 	end_water_wildmons

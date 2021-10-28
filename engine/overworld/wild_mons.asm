@@ -16,18 +16,21 @@ LoadWildData::
 	jr z, .NoGrassData ; if no grass data, skip to surfing data
 	push hl
 	ld de, wGrassMons ; otherwise, load grass data
-	ld bc, $14
+	;ld bc, $14
+	ld bc, $18 ; k: increased ram for extra wild encounter slots
 	call CopyData
 	pop hl
-	ld bc, $14
-	add hl, bc
+	;ld bc, $14
+	ld bc, $18 ; k: increased ram for extra wild encounter slots
+	add hl, bc 
 .NoGrassData
 	ld a, [hli]
 	ld [wWaterRate], a
 	and a
 	ret z        ; if no water data, we're done
 	ld de, wWaterMons  ; otherwise, load surfing data
-	ld bc, $14
+	;ld bc, $14
+	ld bc, $18 ; k: increased ram for extra wild encounter slots
 	jp CopyData
 
 INCLUDE "data/wild/grass_water.asm"

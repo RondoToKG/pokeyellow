@@ -1,16 +1,30 @@
 Route10WildMons:
 	def_grass_wildmons 15 ; encounter rate
-	db 16, MAGNEMITE
-	db 18, RATTATA
-	db 18, MAGNEMITE
-	db 20, MAGNEMITE
-	db 17, NIDORAN_M
-	db 17, NIDORAN_F
-	db 22, MAGNEMITE
-	db 20, RATICATE
-	db 16, MACHOP
-	db 18, MACHOP
+	db  18, RATICATE
+	db  18, FEAROW
+	db  18, KRABBY
+	db  20, KRABBY
+	db  18, NIDORAN_F
+	db  18, NIDORAN_M
+	db  20, NIDORAN_F
+	db  20, NIDORAN_M
+	db  20, NIDORINA
+	db  20, NIDORINO
+	db  22, NIDORINA
+	db  22, NIDORINO
 	end_grass_wildmons
 
-	def_water_wildmons 0 ; encounter rate
+	def_water_wildmons 3 ; encounter rate
+	db  18, TENTACOOL
+	db  18, MAGIKARP
+	db  18, TENTACOOL
+	db  18, MAGIKARP
+	db  20, TENTACOOL
+	db  20, MAGIKARP
+	db  22, TENTACOOL
+	db  22, MAGIKARP
+	db  20, TENTACRUEL
+	db  18, DRATINI
+	db  22, TENTACRUEL
+	db  22, DRAGONAIR
 	end_water_wildmons

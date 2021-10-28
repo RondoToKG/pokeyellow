@@ -68,5 +68,5 @@ EVOLUTION_SIZE EQU 4
 NUM_GROWTH_RATES EQU const_value
 
 ; wild data (see data/wild/maps/*.asm)
-NUM_WILDMONS EQU 10
+NUM_WILDMONS EQU 12 ; k: increased amount of wild pokemon per map from 10 to 12
 WILDDATA_LENGTH EQU 1 + NUM_WILDMONS * 2

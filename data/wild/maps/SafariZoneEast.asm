@@ -9,7 +9,9 @@ SafariZoneEastWildMons:
 	db 26, EXEGGCUTE
 	db 24, MAROWAK
 	db 21, CHANSEY
+	db 25, PARASECT
 	db 15, SCYTHER
+	db 15, PINSIR
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

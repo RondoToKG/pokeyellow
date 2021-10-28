@@ -1,15 +1,17 @@
 Route15WildMons:
 	def_grass_wildmons 15 ; encounter rate
-	db 26, ODDISH
-	db 26, BELLSPROUT
-	db 24, VENONAT
-	db 32, PIDGEOTTO
-	db 28, ODDISH
-	db 28, BELLSPROUT
-	db 30, GLOOM
-	db 30, WEEPINBELL
-	db 27, VENONAT
-	db 30, VENOMOTH
+	db  34, PIDGEY
+	db  36, PIDGEOTTO
+	db  34, ODDISH
+	db  34, BELLSPROUT
+	db  34, VENONAT
+	db  38, VENOMOTH
+	db  36, GLOOM
+	db  36, WEEPINBELL
+	db  36, TAUROS
+	db  38, TAUROS
+	db  38, SCYTHER
+	db  38, PINSIR
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

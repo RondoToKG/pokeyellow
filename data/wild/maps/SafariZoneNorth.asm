@@ -10,6 +10,8 @@ SafariZoneNorthWildMons:
 	db 33, KANGASKHAN
 	db 25, SCYTHER
 	db 15, PINSIR
+	db 21, TAUROS
+	db 21, TAUROS
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate
