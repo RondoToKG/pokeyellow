@@ -18,4 +18,4 @@ As of currently, the following features have been implemented:
 
 - Gen 1's EXP.ALL now works like Gen 7's Exp Share. Pokemon in battle gain 100% of experience, non-fainted pokemon in party gain 50% each. EXP. ALL text has been greatly reduced. (code from Jojobear13's shinpokered)
 
-- TM quantity no longer lowers, making TM's have infinite uses.
+- TM quantity no longer lowers, giving TM's infinite uses.
