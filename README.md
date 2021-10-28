@@ -6,4 +6,4 @@ As of currently, the following features have been implemented:
 	
 	![Category UI](/screenshots/bgb00002.bmp)
 
-- Additionally, all moves have had their base stats updated to be accurate to their values in LGPE. This includes one time buffs such as 200 base power Solarbeam & Sky Attack as well as 40 base power Absorb & 80 base power Mega Drain.
+- Additionally, all moves have had their base stats updated to be accurate to their values in LGPE. This includes one time buffs such as 200 base power Solarbeam & Sky Attack as well as 40 base power Absorb & 75 base power Mega Drain.
