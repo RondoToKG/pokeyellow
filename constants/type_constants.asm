@@ -11,6 +11,7 @@
 	const BIRD         ; $06
 	const BUG          ; $07
 	const GHOST        ; $08
+	const STEEL		   ; $09
 
 	const_next 20
 
@@ -22,6 +23,8 @@
 	const PSYCHIC_TYPE ; $18
 	const ICE          ; $19
 	const DRAGON       ; $1A
+	const DARK         ; $1B
+	const FAIRY	       ; $1C
 
 NUM_TYPES EQU const_value
 

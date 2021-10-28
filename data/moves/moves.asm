@@ -53,7 +53,7 @@ Moves:
 	move TWINEEDLE,    TWINEEDLE_EFFECT,            25, BUG,          PHYSICAL, 100, 20
 	move PIN_MISSILE,  TWO_TO_FIVE_ATTACKS_EFFECT,  25, BUG,          PHYSICAL,  95, 20
 	move LEER,         DEFENSE_DOWN1_EFFECT,         0, NORMAL,       STATUS,   100, 30
-	move BITE,         FLINCH_SIDE_EFFECT2,         60, NORMAL,       PHYSICAL, 100, 25
+	move BITE,         FLINCH_SIDE_EFFECT2,         60, DARK,         PHYSICAL, 100, 25
 	move GROWL,        ATTACK_DOWN1_EFFECT,          0, NORMAL,       STATUS,   100, 40
 	move ROAR,         SWITCH_AND_TELEPORT_EFFECT,   0, NORMAL,       STATUS,   100, 20
 	move SING,         SLEEP_EFFECT,                 0, NORMAL,       STATUS,    55, 15
