@@ -4,4 +4,4 @@ As of currently, the following features have been implemented:
 	
 - Physical/Special split: all original Gen 1 moves have had their modern physical/special/status categories applied. These categories can be seen on the move selection screen of the battle UI.
 	
-![Category UI](/screenshots/bgb00002.bmp)
+	![Category UI](/screenshots/bgb00002.bmp)
