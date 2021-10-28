@@ -12,4 +12,4 @@ As of currently, the following features have been implemented:
 
 - Addition of the Steel, Dark, & Fairy Type and modernized type chart.
 
-- Wild encounter tables expanded from 10 to 12 and have been changed to contain encounters from LGPE. Version exclusive encounter rates split in half to fit both on one encounter table.
+- Wild encounter tables expanded from 10 to 12 and have been changed to contain encounters from LGPE. Version exclusive encounter rates split in half to fit both on one encounter table. All 151 pokemon are catchable.
