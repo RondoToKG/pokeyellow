@@ -2,7 +2,7 @@
 
 The following is an in-progress rom hack of Pokemon Yellow based on the Pret disassembly project. The goal of this project is to implement many of the modern features contained within the official remake, Pokemon Let's Go Pikachu & Eevee (LGPE).
 
-As of currently, the following features have been implemented:
+The following features have been implemented:
 	
 - Physical/Special split: all original Gen 1 moves have had their modern physical/special/status categories applied. These categories can be seen on the move selection screen of the battle UI.
 	
@@ -18,7 +18,7 @@ As of currently, the following features have been implemented:
 
 - Gen 1's EXP.ALL now works like Gen 7's Exp Share. Pokemon in battle gain 100% of experience, non-fainted pokemon in party gain 50% each. EXP. ALL text has been greatly reduced. (code from Jojobear13's shinpokered)
 
-- Fix for the following RBY bugs: 100% accuracy moves having a 1/256 chance to miss, 
+- Fix for the following RBY bugs: 100% accuracy moves having a 1/256 chance to miss, Focus Energy dividing critical hit rate by 4,
 
 - TM quantity no longer lowers, giving TM's infinite uses.
 
