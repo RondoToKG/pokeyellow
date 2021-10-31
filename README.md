@@ -18,7 +18,7 @@ The following features have been implemented:
 
 - Gen 1's EXP.ALL now works like Gen 7's Exp Share. Pokemon in battle gain 100% of experience, non-fainted pokemon in party gain 50% each. EXP. ALL text has been greatly reduced. (code from Jojobear13's shinpokered)
 
-- Fix for the following RBY bugs: 100% accuracy moves having a 1/256 chance to miss, Focus Energy dividing critical hit rate by 4,
+- Fix for the following RBY bugs: 100% accuracy moves having a 1/256 chance to miss, Focus Energy dividing critical hit rate by 4, Reflect/Light Screen boosts not capped at 999, High Jump Kick recoil only dealing 1 damage, static damage not obeying type immunities, various Counter bugs, degradation of Rage & Thrash accuracy, Sleep wasting a turn on wake-up, Mirror Move & Metronome desynch in link battles, Leech Seed/Toxic glitch, Bide hitting invulnerable targets, multi-hit moves not checking damage for each hit, and various Hyper Beam glitches.
 
 - TM quantity no longer lowers, giving TM's infinite uses.
 
