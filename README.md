@@ -18,7 +18,7 @@ As of currently, the following features have been implemented:
 
 - Gen 1's EXP.ALL now works like Gen 7's Exp Share. Pokemon in battle gain 100% of experience, non-fainted pokemon in party gain 50% each. EXP. ALL text has been greatly reduced. (code from Jojobear13's shinpokered)
 
-- Fix for the following RBY bugs: 100% accuracy moves having a 1/256 chance to miss, 
+- Fix for the following RBY bugs: 100% accuracy moves having a 1/256 chance to miss, Focus Energy dividing critical hit rate by 4,
 
 - TM quantity no longer lowers, giving TM's infinite uses.
 
