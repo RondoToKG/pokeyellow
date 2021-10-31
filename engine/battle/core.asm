@@ -4864,6 +4864,7 @@ INCLUDE "data/battle/unused_critical_hit_moves.asm"
 ; determines if attack is a critical hit
 ; Azure Heights claims "the fastest pokémon (who are, not coincidentally,
 ; among the most popular) tend to CH about 20 to 25% of the time."
+; k: jojobear13 code - re-wrote this a bit to clean it up and fix focus energy
 CriticalHitTest:
 	xor a
 	ld [wCriticalHitOrOHKO], a
@@ -4880,28 +4881,38 @@ CriticalHitTest:
 	srl b                        ; (effective (base speed/2))
 	ldh a, [hWhoseTurn]
 	and a
+	ld a, [wPlayerMoveEffect]	 ; k: jojobear13 code - begin storing player move effect
 	ld hl, wPlayerMovePower
 	ld de, wPlayerBattleStatus2
 	jr z, .calcCriticalHitProbability
+	ld a, [wEnemyMoveEffect]	 ; k: jojobear13 code - begin storing enemy move effect
 	ld hl, wEnemyMovePower
 	ld de, wEnemyBattleStatus2
 .calcCriticalHitProbability
+;normal hit is (base speed) / 2
+;focus energy is 2*(base speed) for a 4x crit rate
+;high crit move is 4*(base speed) for a 8x crit rate
+;;;;;;;;;;;;
+; k: jojobear13 code - do not do a critical hit if a special damage move is being used (dragon rage, seismic toss, etc)
+	cp SPECIAL_DAMAGE_EFFECT
+	ret z
+;;;;;;;;;;;;
 	ld a, [hld]                  ; read base power from RAM
 	and a
 	ret z                        ; do nothing if zero
 	dec hl
 	ld c, [hl]                   ; read move id
 	ld a, [de]
-	bit GETTING_PUMPED, a         ; test for focus energy
-	jr nz, .focusEnergyUsed      ; bug: using focus energy causes a shift to the right instead of left,
-	                             ; resulting in 1/4 the usual crit chance
-	sla b                        ; (effective (base speed/2)*2)
-	jr nc, .noFocusEnergyUsed
-	ld b, $ff                    ; cap at 255/256
-	jr .noFocusEnergyUsed
-.focusEnergyUsed
-	srl b
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
+	bit GETTING_PUMPED, a        ; test for focus energy
+	jr z, .noFocusEnergyUsed	 ;if getting pumped bit not set, then focus energy not used
+	;else focus energy was used
+	sla b						 ;*2 for focus energy (effective +2x crit rate)
+	jr c, .capcritical
+	sla b						 ;*2 again for focus energy (effective +4x crit rate)
+	jr c, .capcritical
 .noFocusEnergyUsed
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld hl, HighCriticalMoves     ; table of high critical hit moves
 .Loop
 	ld a, [hli]                  ; read move from move table
@@ -4909,17 +4920,17 @@ CriticalHitTest:
 	jr z, .HighCritical          ; if so, the move about to be used is a high critical hit ratio move
 	inc a                        ; move on to the next move, FF terminates loop
 	jr nz, .Loop                 ; check the next move in HighCriticalMoves
-	srl b                        ; /2 for regular move (effective (base speed / 2))
-	jr .SkipHighCritical         ; continue as a normal move
+	jr .finishcalc         		 ; continue as a normal move
 .HighCritical
-	sla b                        ; *2 for high critical hit moves
-	jr nc, .noCarry
-	ld b, $ff                    ; cap at 255/256
-.noCarry
-	sla b                        ; *4 for high critical move (effective (base speed/2)*8))
-	jr nc, .SkipHighCritical
-	ld b, $ff
-.SkipHighCritical
+	sla b                        ; *2 for high critical hit moves (effective +2x crit rate)
+	jr c, .capcritical
+	sla b                        ; *2 again for high critical hit moves (effective +4x crit rate)
+	jr c, .capcritical
+	sla b                        ; *2 again for high critical hit moves (effective +8x crit rate)
+	jr nc, .finishcalc
+.capcritical
+	ld b, $ff					 ; cap at 255/256
+.finishcalc
 	call BattleRandom            ; generates a random value, in "a"
 	rlc a
 	rlc a
@@ -5724,15 +5735,11 @@ MoveHitTest:
 .doAccuracyCheck
 ; if the random number generated is greater than or equal to the scaled accuracy, the move misses
 ; note that this means that even the highest accuracy is still just a 255/256 chance, not 100%
-
-	; The following snippet is taken from Pokemon Crystal, it fixes the above bug.
-	ld a,b
-	cp $FF ; Is the value $FF?
-	jr z, .Hit ; If so, we need not calculate, just so we can fix this bug.
-	
 	call BattleRandom
 	cp b
+	jr z, .move_hit 	; k: jojobear13 code - fixed move acuracy so a move hits if acc = randnum
 	jr nc, .moveMissed
+.move_hit
 	ret
 .moveMissed
 	xor a
